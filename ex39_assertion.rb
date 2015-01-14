@@ -2,10 +2,15 @@ require './dict.rb'
 require "test/unit"
 
 class Tests < Test::Unit::TestCase
+
+  def setup
+    @hash = { 'Key' => 'Value' }
+  end
   
   def test_state
-    states = {'Michigan' => 'MI'}
-	assert_equal 'MI', "#{states['Michigan']}"
+    assert_equal 'Value', @hash['Key']
+    #states = {'Michigan' => 'MI'}
+    #assert_equal 'MI', "#{states['Michigan']}"
   end
 
   def test_cities
@@ -13,24 +18,22 @@ class Tests < Test::Unit::TestCase
     assert_equal 'Portland', "#{cities['OR']}"
   end
 
-=begin
-  begin test_state
-  rescue Exception => ex
-      raise $!, "This is not a #{$!}!", $!.backtrace
+  def test_non_state
+    states = {'Michigan' => 'MI'}
+    assert_nil states['TX']
   end
-=end
+
+  def test_fetch
+    grades = {'Tom' => 'C-'}
+    assert_equal "C-", grades.fetch("Tom")
+  end
+
+  def test_more_fetch
+    grades = {"George" => "D"}
+    assert_equal 'No such luck', grades.fetch("B", "No such luck")
+  end
+
 end
-
-
-#state = Dict.get(states, 'Texas')
-
-#if !state
-#  puts "Sorry, no Texas."
-#end
-
-#city = Dict.get(cities, 'TX', 'Does Not Exist')
-#puts "The city for the state 'TX' is: #{city}" -- raise an error comment!
-
 
 =begin
 def dump (category)
